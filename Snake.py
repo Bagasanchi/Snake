@@ -1,5 +1,6 @@
 import pygame,sys,random
 from pygame.math import Vector2
+from bfs import bfs
 
 class SNAKE:
 	def __init__(self):
@@ -112,6 +113,10 @@ class MAIN:
 		self.fruit = FRUIT()
 
 	def update(self):
+		if self.snake.body[0] != self.fruit.pos:
+			path = bfs(self.snake.body[0], self.fruit.pos, cell_number)
+			if path:
+				self.snake.direction = path[0]
 		self.snake.move_snake()
 		self.check_collision()
 		self.check_fail()
@@ -192,19 +197,19 @@ while True:
 			sys.exit()
 		if event.type == SCREEN_UPDATE:
 			main_game.update()
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_UP:
-				if main_game.snake.direction.y != 1:
-					main_game.snake.direction = Vector2(0,-1)
-			if event.key == pygame.K_RIGHT:
-				if main_game.snake.direction.x != -1:
-					main_game.snake.direction = Vector2(1,0)
-			if event.key == pygame.K_DOWN:
-				if main_game.snake.direction.y != -1:
-					main_game.snake.direction = Vector2(0,1)
-			if event.key == pygame.K_LEFT:
-				if main_game.snake.direction.x != 1:
-					main_game.snake.direction = Vector2(-1,0)
+		# if event.type == pygame.KEYDOWN:
+		# 	if event.key == pygame.K_UP:
+		# 		if main_game.snake.direction.y != 1:
+		# 			main_game.snake.direction = Vector2(0,-1)
+		# 	if event.key == pygame.K_RIGHT:
+		# 		if main_game.snake.direction.x != -1:
+		# 			main_game.snake.direction = Vector2(1,0)
+		# 	if event.key == pygame.K_DOWN:
+		# 		if main_game.snake.direction.y != -1:
+		# 			main_game.snake.direction = Vector2(0,1)
+		# 	if event.key == pygame.K_LEFT:
+		# 		if main_game.snake.direction.x != 1:
+		# 			main_game.snake.direction = Vector2(-1,0)
 
 	screen.fill((175,215,70))
 	main_game.draw_elements()
