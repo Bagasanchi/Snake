@@ -1,13 +1,15 @@
 from pygame.math import Vector2
 from collections import deque
 
-def bfs(start, goal, grid_size):
+def bfs(start, goal, obstacles, grid_size):
     directions = [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)]
     queue = deque()
     queue.append((start, []))
     visited = set()
-    visited.add((start.x, start.y))  # Use tuple for hashable
+    visited.add((start.x, start.y))  # Store as tuple
 
+    # Convert obstacles to tuple format
+    obstacle_set = {(ob.x, ob.y) for ob in obstacles}
     goal_tuple = (goal.x, goal.y)
 
     while queue:
@@ -21,7 +23,7 @@ def bfs(start, goal, grid_size):
             neighbor = current + d
             neighbor_tuple = (neighbor.x, neighbor.y)
             if (0 <= neighbor.x < grid_size and 0 <= neighbor.y < grid_size and
-                neighbor_tuple not in visited):
+                neighbor_tuple not in obstacle_set and neighbor_tuple not in visited):
                 visited.add(neighbor_tuple)
                 queue.append((neighbor, path + [d]))
 
