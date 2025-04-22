@@ -113,13 +113,13 @@ class MAIN:
 		self.fruit = FRUIT()
 
 	def update(self):
-		if self.snake.body[0] != self.fruit.pos:
-			path = bfs(self.snake.body[0], self.fruit.pos, cell_number)
-			if path:
-				self.snake.direction = path[0]
-		self.snake.move_snake()
-		self.check_collision()
-		self.check_fail()
+	    path = bfs(self.snake.body[0], self.fruit.pos, self.snake.body[1:], cell_number)
+	    if path:
+	        self.snake.direction = path[0]
+	    self.snake.move_snake()
+	    self.check_collision()
+	    self.check_fail()
+
 
 	def draw_elements(self):
 		self.draw_grass()
